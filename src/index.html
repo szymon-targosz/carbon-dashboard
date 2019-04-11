@@ -11,9 +11,33 @@
 <body>
    <header>
       <div class="container">
-         <p>CO<sub>2</sub> Dashboard</p>  
+         <p>CO<sub>2</sub> Dashboard</p>
       </div>
    </header>
+   <section class="ctrl">
+      <div class="container">
+         <div class="ctrl__item">
+            <p>CO<sub>2</sub> emissions by year. Current year: <span id="year-span"></span></p>
+            <input type="range" id="year" step="1">
+         </div>
+         <div class="ctrl__item">
+            <label>
+               <input type="radio" name="type" value="emissions" checked>
+               Emissions
+            </label>
+            <label>
+               <input type="radio" name="type" value="emissionsPerCapita">
+               Emissions Per Capita
+            </label>
+         </div>
+      </div>
+   </section>
+   <main>
+      <div class="container">
+         <div id="map"></div>
+      </div>
+   </main>
+   <div class="tooltip"></div>
 </body>
 
 </html>

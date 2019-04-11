@@ -26,10 +26,57 @@ body {
    padding: 0 1rem;
 }
 
+svg {
+   display: block;
+   margin: 0 auto;
+}
+
 header {
    background: #20222b;
    font-family: 'Nunito', sans-serif;
    font-weight: 700;
    font-size: 2.75rem;
    padding: 2.5rem 0;
+}
+
+.ctrl {
+   margin-bottom: 5rem;
+}
+
+.ctrl__item {
+   display: flex;
+   padding: 1rem 0;
+}
+
+label:first-of-type,
+#year-span {
+   margin-right: 2rem;
+}
+
+#year-span {
+   font-weight: 700;
+}
+
+.tooltip {
+   background: rgba(0, 0, 0, .8);
+   color: #fdfdfd;
+   padding: 1rem;
+   pointer-events: none;
+   position: absolute;
+   opacity: 0;
+}
+
+.tooltip span {
+   font-weight: 700;
+}
+
+.tooltip::after {
+   pointer-events: none;
+   display: block;
+   content: '';
+   position: absolute;
+   border: 6px solid transparent;
+   border-top-color: rgba(0, 0, 0, .8);
+   left: calc((100% / 2) - 6px);
+   bottom: -12px;
 }

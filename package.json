@@ -13,7 +13,7 @@
   "dependencies": {
     "@babel/polyfill": "^7.4.3",
     "d3": "^5.9.2",
-    "d3-tip": "^0.9.1"
+    "topojson": "^3.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.4.3",
