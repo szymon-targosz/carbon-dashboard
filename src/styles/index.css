@@ -31,6 +31,11 @@ svg {
    margin: 0 auto;
 }
 
+input,
+label {
+   cursor: pointer;
+}
+
 header {
    background: #20222b;
    font-family: 'Nunito', sans-serif;
@@ -46,6 +51,7 @@ header {
 .ctrl__item {
    display: flex;
    padding: 1rem 0;
+   justify-content: center;
 }
 
 label:first-of-type,
@@ -55,6 +61,16 @@ label:first-of-type,
 
 #year-span {
    font-weight: 700;
+}
+
+.title {
+   fill: #f7f7f7;
+   font-size: 2.5rem;
+   text-anchor: middle;
+}
+
+#map {
+   margin-bottom: 7rem;
 }
 
 .tooltip {
@@ -79,4 +95,13 @@ label:first-of-type,
    border-top-color: rgba(0, 0, 0, .8);
    left: calc((100% / 2) - 6px);
    bottom: -12px;
+}
+
+.active {
+   stroke: #000;
+   stroke-width: 2px;
+}
+
+.chosen {
+   fill: #8357c5;
 }

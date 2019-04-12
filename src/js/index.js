@@ -1,9 +1,10 @@
 import * as d3 from 'd3';
 import { feature, mesh } from 'topojson';
 import Choropleth from './choropleth';
+import BarChart from './barChart';
 import '../styles/index.css';
 
-let geoData, countriesData, meshData, yearsRange, choropleth, count = 0;
+let geoData, dataByYear, allData, meshData, yearsRange, choropleth, barChart, activeCountry, count = 0;
 const slider = document.getElementById('year');
 const yearSpan = document.getElementById('year-span');
 
@@ -23,7 +24,8 @@ const promises = [
 Promise.all(promises)
    .then(([data, mapData]) => {
       yearsRange = d3.extent(data, d => d.year)
-      countriesData = d3.nest().key(d => d.year).entries(data).reverse();
+      dataByYear = d3.nest().key(d => d.year).entries(data).reverse();
+      allData = data;
       meshData = mesh(mapData, mapData.objects.countries, (a, b) => a !== b);
 
       geoData = feature(mapData, mapData.objects.countries).features;
@@ -44,29 +46,45 @@ Promise.all(promises)
       slider.setAttribute('value', yearsRange[0]);
 
       choropleth = new Choropleth('#map');
+      barChart = new BarChart('#bar-chart');
    })
    .catch(e => console.warn(e));
 
 
 document.querySelectorAll('input[name="type"]').forEach(input => {
-   input.addEventListener('change', update);
+   input.addEventListener('change', () => {
+      choropleth.wrangleData();
+      toggleBars(activeCountry);
+   });
 });
 
-slider.addEventListener('input', function(e) {
+slider.addEventListener('input', function (e) {
    count = this.value - yearsRange[0];
    yearSpan.textContent = this.value;
-   update();
+   choropleth.wrangleData();
+   barChart.highlightBars(+this.value);
 });
 
-
-
-function update() {
-   choropleth.wrangleData();
-}
+function toggleBars(countryCode) {
+   activeCountry = countryCode;
+   const year = +slider.value;
+   barChart.wrangleData(activeCountry);
+   barChart.highlightBars(year);
+};
 
 const getGeoData = () => geoData;
 const getMeshData = () => meshData;
-const getCountriesData = () => countriesData[count];
+const getYearData = () => dataByYear[count];
+const getAllData = () => allData;
 const getType = () => document.querySelector('input[name="type"]:checked').value;
+const getYearsRange = () => {
+   const arr = [];
+   let year = yearsRange[0]
+   while (year <= yearsRange[1]) {
+      arr.push(year);
+      year++;
+   }
+   return arr;
+};
 
-export { getGeoData, getCountriesData, getMeshData, getType };
+export { getGeoData, getYearData, getAllData, getMeshData, getType, toggleBars, getYearsRange };

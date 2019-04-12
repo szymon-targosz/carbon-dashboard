@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import { getCountriesData, getGeoData, getType, getMeshData } from './index';
+import { getYearData, getGeoData, getType, getMeshData, toggleBars } from './index';
 
 export default class Choropleth {
    constructor(parentElem) {
@@ -35,9 +35,7 @@ export default class Choropleth {
       this.title = this.g.append('text')
                         .attr('x', this.width / 2)
                         .attr('y', 20)
-                        .attr('font-size', '2.5rem')
-                        .attr('fill', '#f7f7f7')
-                        .style('text-anchor', 'middle');
+                        .attr('class', 'title');
                         
       this.tooltip = d3.select('.tooltip');
 
@@ -46,8 +44,8 @@ export default class Choropleth {
 
    wrangleData() {
       this.type = getType();
-
-      const countriesData = getCountriesData();
+      
+      const countriesData = getYearData();
       this.year = countriesData.key;
 
       this.geoData = getGeoData();
@@ -56,11 +54,17 @@ export default class Choropleth {
          const country = countriesData.values.find(c => c.countryCode === feature.id);
          if (country) {
             feature.properties = {
-               ...feature.properties,
+               country: feature.properties.country,
+               region: feature.properties.region,
                continent: country.continent,
                emissions: country.emissions,
                emissionsPerCapita: country.emissionsPerCapita,
                year: country.year
+            }
+         } else {
+            feature.properties = {
+               country: feature.properties.country,
+               region: feature.properties.region
             }
          }
       });
@@ -78,15 +82,27 @@ export default class Choropleth {
       this.paths
          .enter()
          .append('path')
+            .attr('class', 'country-path')
             .attr('d', this.path)
             .on('mousemove touchstart', function(d) {
-               d3.event.target.style.stroke = 'black';
-               d3.event.target.style.strokeWidth = '2px';
+               d3.event.target.classList.add('active');
                vis.showTooltip(d.properties);
             })
             .on('mouseout touchend', (d) => {
-               d3.event.target.style.stroke = 'none';
+               d3.event.target.classList.remove('active');
                vis.hideTooltip();
+            })
+            .on('click', function(d) {
+               const country = d3.select(this);
+               const isChosen = country.classed('chosen');
+               d3.selectAll('.chosen').classed('chosen', false);
+               if (isChosen) {
+                  country.classed('chosen', false);
+                  toggleBars();
+               } else {
+                  country.classed('chosen', true);
+                  toggleBars(d.id);
+               }
             })
          .merge(this.paths)
             .transition()
