@@ -18,6 +18,8 @@ body {
    color: #f7f7f7;
    font-size: 1.6rem;
    font-family: 'Open Sans', sans-serif;
+   position: relative;
+   min-height: 100vh;
 }
 
 .container {
@@ -41,6 +43,14 @@ body {
    text-anchor: middle;
 }
 
+.error {
+   background: #dc3545;
+   border-radius: 4px;
+   padding: 1.5rem 0;
+   text-align: center;
+   margin: 2rem auto;
+}
+
 svg {
    display: block;
    margin: 0 auto;
@@ -61,6 +71,14 @@ header {
    font-weight: 700;
    font-size: 2.75rem;
    padding: 2.5rem 0;
+}
+
+footer {
+   bottom: 0;
+   padding: 2rem 0;
+   position: absolute;
+   text-align: center;
+   width: 100%;
 }
 
 .ctrl {
@@ -86,12 +104,9 @@ label:first-of-type,
    margin-bottom: 7rem;
 }
 
-footer {
-   margin-top: 7rem;
-   padding: 3rem 0;
-   text-align: center;
+#bar-chart {
+   padding-bottom: 10rem;
 }
-
 
 .tooltip {
    background: rgba(0, 0, 0, .8);
@@ -100,6 +115,7 @@ footer {
    pointer-events: none;
    position: absolute;
    opacity: 0;
+   top: 0;
 }
 
 .tooltip span {

@@ -23,7 +23,7 @@ const promises = [
 
 Promise.all(promises)
    .then(([data, mapData]) => {
-      yearsRange = d3.extent(data, d => d.year)
+      yearsRange = d3.extent(data, d => d.year);
       dataByYear = d3.nest().key(d => d.year).entries(data).reverse();
       allData = data;
       meshData = mesh(mapData, mapData.objects.countries, (a, b) => a !== b);
@@ -48,7 +48,7 @@ Promise.all(promises)
       choropleth = new Choropleth('#map');
       barChart = new BarChart('#bar-chart');
    })
-   .catch(e => console.warn(e));
+   .catch(e => showError());
 
 
 document.querySelectorAll('input[name="type"]').forEach(input => {
@@ -70,7 +70,16 @@ function toggleBars(countryCode) {
    const year = +slider.value;
    barChart.wrangleData(activeCountry);
    barChart.highlightBars(year);
-};
+}
+
+function showError() {
+   const p = document.createElement('p');
+   p.classList.add('container', 'error');
+   p.textContent = 'Failed to retrieve data. Please try again later.';
+
+   const sectionCtrl = document.querySelector('.ctrl');
+   document.body.insertBefore(p, sectionCtrl);
+}
 
 const getGeoData = () => geoData;
 const getMeshData = () => meshData;
