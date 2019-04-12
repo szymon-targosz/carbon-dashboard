@@ -26,6 +26,21 @@ body {
    padding: 0 1rem;
 }
 
+.active {
+   stroke: #000;
+   stroke-width: 2px;
+}
+
+.chosen {
+   fill: #8357c5;
+}
+
+.title {
+   fill: #f7f7f7;
+   font-size: 2.5rem;
+   text-anchor: middle;
+}
+
 svg {
    display: block;
    margin: 0 auto;
@@ -36,8 +51,12 @@ label {
    cursor: pointer;
 }
 
-header {
+header,
+footer {
    background: #20222b;
+}
+
+header {
    font-family: 'Nunito', sans-serif;
    font-weight: 700;
    font-size: 2.75rem;
@@ -63,15 +82,16 @@ label:first-of-type,
    font-weight: 700;
 }
 
-.title {
-   fill: #f7f7f7;
-   font-size: 2.5rem;
-   text-anchor: middle;
-}
-
 #map {
    margin-bottom: 7rem;
 }
+
+footer {
+   margin-top: 7rem;
+   padding: 3rem 0;
+   text-align: center;
+}
+
 
 .tooltip {
    background: rgba(0, 0, 0, .8);
@@ -95,13 +115,4 @@ label:first-of-type,
    border-top-color: rgba(0, 0, 0, .8);
    left: calc((100% / 2) - 6px);
    bottom: -12px;
-}
-
-.active {
-   stroke: #000;
-   stroke-width: 2px;
-}
-
-.chosen {
-   fill: #8357c5;
 }
